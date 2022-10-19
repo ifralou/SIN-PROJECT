@@ -4,7 +4,9 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "author")
@@ -26,6 +28,9 @@ public class Author {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Publisher> publishers = new HashSet<>();
 
     public Author() {}
     public Author(String email, String firstName, String surname) {
@@ -79,6 +84,14 @@ public class Author {
 
     public Long getId() {
         return id;
+    }
+
+    public Set<Publisher> getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(Set<Publisher> publishers) {
+        this.publishers = publishers;
     }
 
     @Override

@@ -5,7 +5,9 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -25,7 +27,10 @@ public class Book {
     private LocalDate publishingDate;
 
     @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
-    private List<Author> authors = new ArrayList<>();
+    private Set<Author> authors = new HashSet<>();
+
+    @ManyToOne
+    private Publisher publisher;
 
     public Book() {}
 
@@ -75,11 +80,11 @@ public class Book {
                 '}';
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 

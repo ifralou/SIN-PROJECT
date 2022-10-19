@@ -2,10 +2,7 @@ package cz.fraloily.implementationpartsin.entity;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "library")
@@ -17,6 +14,9 @@ public class Library {
 
     @NotNull
     private String name;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
 
     public Library() {}
 
@@ -39,6 +39,14 @@ public class Library {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

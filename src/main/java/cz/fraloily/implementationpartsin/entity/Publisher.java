@@ -1,11 +1,10 @@
 package cz.fraloily.implementationpartsin.entity;
 
 import com.sun.istack.NotNull;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "publisher")
@@ -16,7 +15,17 @@ public class Publisher {
     private Long id;
 
     @NotNull
+    @Column(name = "name")
     private String name;
+
+    @ManyToMany(mappedBy = "publishers", fetch = FetchType.EAGER)
+    private Set<Author> authors = new HashSet<>();
+
+    @OneToMany(mappedBy="publisher", cascade=CascadeType.ALL, orphanRemoval=true)
+    private Set<Book> books = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
 
     public Publisher() {}
 
@@ -38,6 +47,30 @@ public class Publisher {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
