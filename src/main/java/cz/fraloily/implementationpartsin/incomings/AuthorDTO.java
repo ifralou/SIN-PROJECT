@@ -3,6 +3,8 @@ package cz.fraloily.implementationpartsin.incomings;
 import cz.fraloily.implementationpartsin.entity.Author;
 import cz.fraloily.implementationpartsin.entity.Book;
 import cz.fraloily.implementationpartsin.entity.Publisher;
+import cz.fraloily.implementationpartsin.exceptions.FailedResponse;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Set;
@@ -63,6 +65,10 @@ public class AuthorDTO implements DTO<Author> {
 
     @Override
     public Author updateEntity(Author entity) {
+        //TODO: Add validations
+        if(email == null || firstname == null || surname == null ) {
+            throw new FailedResponse(HttpStatus.BAD_REQUEST, "Some required properties are null.");
+        }
         entity.setEmail(email);
         entity.setFirstName(firstname);
         entity.setSurname(surname);
