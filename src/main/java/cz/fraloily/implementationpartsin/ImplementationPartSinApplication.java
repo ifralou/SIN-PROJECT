@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ImplementationPartSinApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ImplementationPartSinApplication.class, args);
+        var context = SpringApplication.run(ImplementationPartSinApplication.class, args);
+        context.getBean(TestService.class)
+                .testAuthor();
     }
 
 }
