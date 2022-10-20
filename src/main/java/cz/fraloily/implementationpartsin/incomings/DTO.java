@@ -1,5 +1,5 @@
 package cz.fraloily.implementationpartsin.incomings;
 
-public interface Incoming<Out> {
+public interface DTO<Out> {
     Out updateEntity(Out entity);
 }

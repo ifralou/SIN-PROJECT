@@ -1,7 +1,7 @@
 package cz.fraloily.implementationpartsin.service;
 
 import cz.fraloily.implementationpartsin.entity.Author;
-import cz.fraloily.implementationpartsin.incomings.AuthorIn;
+import cz.fraloily.implementationpartsin.incomings.AuthorDTO;
 import cz.fraloily.implementationpartsin.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ public class AuthorService {
 
     @PutMapping("/{id}")
     @Transactional
-    public Author putOne(@PathVariable Long id, @RequestBody AuthorIn incoming) {
+    public Author putOne(@PathVariable Long id, @RequestBody AuthorDTO incoming) {
         var current = authorRepository
                 .getAuthorById(id)
                 .orElseThrow(() -> new RuntimeException("No author found"));

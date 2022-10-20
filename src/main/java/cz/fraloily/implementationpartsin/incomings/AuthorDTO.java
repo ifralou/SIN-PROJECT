@@ -4,12 +4,10 @@ import cz.fraloily.implementationpartsin.entity.Author;
 import cz.fraloily.implementationpartsin.entity.Book;
 import cz.fraloily.implementationpartsin.entity.Publisher;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Set;
 
-public class AuthorIn implements Incoming<Author> {
+public class AuthorDTO implements DTO<Author> {
 
     private String email;
 
@@ -21,7 +19,7 @@ public class AuthorIn implements Incoming<Author> {
 
     private Set<Publisher> publishers;
 
-    public AuthorIn() {}
+    public AuthorDTO() {}
 
     public String getEmail() {
         return email;
