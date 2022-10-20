@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "library")
 public class Library {
+    //TODO: Add book relation.
 
     @Id
     @GeneratedValue

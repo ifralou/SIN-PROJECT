@@ -12,6 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "books")
 public class Book {
+    //TODO: Add library relation.
 
     @Id
     @GeneratedValue

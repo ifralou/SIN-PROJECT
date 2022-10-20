@@ -1,12 +1,12 @@
 package cz.fraloily.implementationpartsin.entity;
 
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 @Entity
 @Table(name = "author")
@@ -16,13 +16,18 @@ public class Author {
     @GeneratedValue
     private Long id;
 
-    @NonNull
-    @Column(name = "email")
+    @Email
+    @NotBlank
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "firstName")
+    @NotNull
+    @NotBlank
+    @Column(name = "firstname")
     private String firstName;
 
+    @NotNull
+    @NotBlank
     @Column(name = "surname")
     private String surname;
 
@@ -39,7 +44,7 @@ public class Author {
         this.surname = surname;
     }
 
-    public Author(@NonNull String email, String firstName, String surname, Long id) {
+    public Author(String email, String firstName, String surname, Long id) {
         this.email = email;
         this.firstName = firstName;
         this.surname = surname;
@@ -95,12 +100,27 @@ public class Author {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Author)) return false;
+        Author author = (Author) o;
+        return Objects.equals(getId(), author.getId()) && Objects.equals(getEmail(), author.getEmail()) && Objects.equals(getFirstName(), author.getFirstName()) && Objects.equals(getSurname(), author.getSurname()) && Objects.equals(getBooks(), author.getBooks()) && Objects.equals(getPublishers(), author.getPublishers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getEmail(), getFirstName(), getSurname(), getBooks(), getPublishers());
+    }
+
+    @Override
     public String toString() {
         return "Author{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", surname='" + surname + '\'' +
+                ", books=" + books +
+                ", publishers=" + publishers +
                 '}';
     }
 }
