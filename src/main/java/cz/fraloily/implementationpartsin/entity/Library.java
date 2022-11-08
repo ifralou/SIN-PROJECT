@@ -3,10 +3,11 @@ package cz.fraloily.implementationpartsin.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "library")
-public class Library {
+public class Library implements Serializable {
     //TODO: Add book relation.
 
     @Id

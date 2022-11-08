@@ -2,13 +2,14 @@ package cz.fraloily.implementationpartsin.entity;
 
 import com.sun.istack.NotNull;
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "publisher")
-public class Publisher {
+public class Publisher implements Serializable {
 
     @Id
     @GeneratedValue
@@ -28,6 +29,7 @@ public class Publisher {
     private Address address;
 
     public Publisher() {}
+
 
     public Publisher(String name) {
         this.name = name;
@@ -71,6 +73,10 @@ public class Publisher {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public void addAuthor(Author ...authors) {
+       this.authors.addAll(List.of(authors));
     }
 
     @Override

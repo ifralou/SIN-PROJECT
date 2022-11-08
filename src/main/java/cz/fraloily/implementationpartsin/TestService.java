@@ -2,8 +2,10 @@ package cz.fraloily.implementationpartsin;
 
 import cz.fraloily.implementationpartsin.entity.Author;
 import cz.fraloily.implementationpartsin.entity.Book;
+import cz.fraloily.implementationpartsin.entity.Publisher;
 import cz.fraloily.implementationpartsin.repository.AuthorRepository;
 import cz.fraloily.implementationpartsin.repository.BookRepository;
+import cz.fraloily.implementationpartsin.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,17 @@ public class TestService {
 
     private BookRepository bookRep;
     private AuthorRepository authorRep;
+    private PublisherRepository publisherRepository;
 
 
     public TestService(
             @Autowired BookRepository bookRa,
-            @Autowired AuthorRepository authorRep
-    ) {
+            @Autowired AuthorRepository authorRep,
+            @Autowired PublisherRepository publisherRepository
+            ) {
         this.bookRep = bookRa;
         this.authorRep = authorRep;
+        this.publisherRepository = publisherRepository;
     }
 
     public TestService testBook() {
@@ -40,6 +45,17 @@ public class TestService {
                         () -> new RuntimeException("No book found")
                 )
         );
+
+        return this;
+    }
+
+    public TestService testPublisher() {
+
+        publisherRepository.save(
+                new Publisher("SuperPublisher")
+        );
+
+        System.out.println(publisherRepository.getPublisherByName("SuperPublisher"));
 
         return this;
     }

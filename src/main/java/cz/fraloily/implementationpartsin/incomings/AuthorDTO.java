@@ -23,6 +23,14 @@ public class AuthorDTO implements DTO<Author> {
 
     public AuthorDTO() {}
 
+    public AuthorDTO(Author entity) {
+       email = entity.getEmail();
+       firstname = entity.getFirstName();
+       surname = entity.getSurname();
+       books = entity.getBooks();
+       publishers = entity.getPublishers();
+    }
+
     public String getEmail() {
         return email;
     }
@@ -80,6 +88,7 @@ public class AuthorDTO implements DTO<Author> {
         }
         return entity;
     }
+
 
     @Override
     public String toString() {

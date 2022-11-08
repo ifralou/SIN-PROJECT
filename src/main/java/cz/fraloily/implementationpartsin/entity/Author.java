@@ -4,13 +4,13 @@ package cz.fraloily.implementationpartsin.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "author")
-public class Author {
+public class Author implements Serializable {
 
     @Id
     @GeneratedValue
@@ -97,6 +97,10 @@ public class Author {
 
     public void setPublishers(Set<Publisher> publishers) {
         this.publishers = publishers;
+    }
+
+    public void addPublisher(Publisher ...publishers) {
+        this.publishers.addAll(List.of(publishers));
     }
 
     @Override

@@ -3,6 +3,7 @@ package cz.fraloily.implementationpartsin.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "books")
-public class Book {
+public class Book implements Serializable {
     //TODO: Add library relation.
 
     @Id
