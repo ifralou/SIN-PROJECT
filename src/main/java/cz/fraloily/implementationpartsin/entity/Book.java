@@ -1,6 +1,9 @@
 package cz.fraloily.implementationpartsin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "books")
-public class Book implements Serializable {
-    //TODO: Add library relation.
+@Data public class Book implements Serializable {
 
     @Id
     @GeneratedValue
@@ -23,14 +25,21 @@ public class Book implements Serializable {
     @NotNull
     private String isbn;
 
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
+
     @Column(name = "name")
     private String name;
     @Column(name = "pubDate")
     private LocalDate publishingDate;
 
+    @JsonIgnore
+    @ToString.Exclude
     @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
     private Set<Author> authors = new HashSet<>();
 
+    @JsonIgnore
+    @ToString.Exclude
     @ManyToOne
     private Publisher publisher;
 
@@ -42,59 +51,16 @@ public class Book implements Serializable {
         this.publishingDate = publishingDate;
     }
 
-    public Book(String isbn, String name, LocalDate publishingDate, Long id) {
+    public Book(String isbn, Genre genre, String name, LocalDate publishingDate) {
         this.isbn = isbn;
+        this.genre = genre;
         this.name = name;
         this.publishingDate = publishingDate;
-        this.id = id;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public void addAuthors(List<Author> authors) {
+        // Mutability issues
+        this.authors.addAll(authors);
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getPublishingDate() {
-        return publishingDate;
-    }
-
-    public void setPublishingDate(LocalDate publishingDate) {
-        this.publishingDate = publishingDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "isbn='" + isbn + '\'' +
-                ", name='" + name + '\'' +
-                ", publishingDate=" + publishingDate +
-                '}';
-    }
-
-    public Set<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

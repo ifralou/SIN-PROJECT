@@ -1,6 +1,8 @@
 package cz.fraloily.implementationpartsin.entity;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,25 +12,14 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "address")
-public class Address implements Serializable {
+@Data public class Address implements Serializable {
     @Id
-    @GeneratedValue
-    private Long id;
-
-    @NotNull
-    private Integer number;
-
-    @NotNull
-    private String street;
-
+    @GeneratedValue private Long id;
+    @NotNull private Integer number;
+    @NotNull private String street;
     private String district;
-
-    @NotNull
-    private String city;
-
-    @NotNull
-    private String country;
-
+    @NotNull private String city;
+    @NotNull private String country;
     public Address() {}
 
     public Address(Integer number, String street, String city, String country) {
@@ -37,7 +28,6 @@ public class Address implements Serializable {
         this.city = city;
         this.country = country;
     }
-
     public Address(Integer number, String street, String district, String city, String country) {
         this.number = number;
         this.street = street;
@@ -46,12 +36,4 @@ public class Address implements Serializable {
         this.country = country;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
-    }
 }

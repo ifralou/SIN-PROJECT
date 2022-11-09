@@ -5,6 +5,4 @@ import cz.fraloily.implementationpartsin.incomings.AuthorDTO;
 
 public interface AuthorService {
 
-    Author addPublisherToAuthor(Long authorId, Long publisherId);
-
 }

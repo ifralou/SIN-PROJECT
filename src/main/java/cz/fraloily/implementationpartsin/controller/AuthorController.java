@@ -55,7 +55,7 @@ public class AuthorController {
         authorRepository.deleteAuthorById(id);
     }
 
-    @PostMapping("/publisher")
+    @PutMapping("/publisher")
     public Author addPublishersToAuthor(
             @RequestParam Long author,
             @RequestParam Long pub

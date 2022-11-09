@@ -21,8 +21,7 @@ public class AuthorServiceImpl implements AuthorService {
         this.publisherRepository = publisherRepository;
     }
 
-    @Override
-    public Author addPublisherToAuthor(Long authorId, Long publisherId) {
+    public Author signAuthorToPublisher(Long authorId, Long publisherId) {
         var author = authorRepository.getAuthorById(authorId)
                 .orElseThrow(() -> new FailedResponse(HttpStatus.BAD_REQUEST, "No such author with id: " + authorId));
 
@@ -33,10 +32,9 @@ public class AuthorServiceImpl implements AuthorService {
         publisherRepository.save(publisher);
 
         author.addPublisher(publisher);
-        authorRepository.save(author);
-
-        return authorRepository.getAuthorById(authorId).get();
+        return authorRepository.save(author);
     }
+
 
 
 }

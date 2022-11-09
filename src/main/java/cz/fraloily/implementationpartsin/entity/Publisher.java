@@ -1,6 +1,10 @@
 package cz.fraloily.implementationpartsin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -9,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "publisher")
+@Data
 public class Publisher implements Serializable {
 
     @Id
@@ -19,9 +24,13 @@ public class Publisher implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
+    @ToString.Exclude
     @ManyToMany(mappedBy = "publishers", fetch = FetchType.EAGER)
     private Set<Author> authors = new HashSet<>();
 
+    @JsonIgnore
+    @ToString.Exclude
     @OneToMany(mappedBy="publisher", cascade=CascadeType.ALL, orphanRemoval=true)
     private Set<Book> books = new HashSet<>();
 
@@ -30,60 +39,15 @@ public class Publisher implements Serializable {
 
     public Publisher() {}
 
-
     public Publisher(String name) {
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
-
-    public Set<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Set<Book> books) {
-        this.books = books;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public void addAuthor(Author ...authors) {
        this.authors.addAll(List.of(authors));
     }
-
-    @Override
-    public String toString() {
-        return "Publisher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public void addBook(Book book) {
+        this.books.add(book);
     }
+
 }
