@@ -8,6 +8,9 @@ import java.util.Optional;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
     List<Author> getAuthorByEmail(String email);
     Optional<Author> getAuthorById(Long id);
+    Optional<Author> getAuthorByEmailAndFirstnameAndSurname(
+            String email, String firstname, String surname
+    );
 
     Long deleteAuthorById(Long id);
 }

@@ -9,7 +9,9 @@ public class ImplementationPartSinApplication {
     public static void main(String[] args) {
         var context = SpringApplication.run(ImplementationPartSinApplication.class, args);
         context.getBean(TestService.class)
-                .testAuthor();
+                .testAuthor()
+                .testPublisher();
+
     }
 
 }

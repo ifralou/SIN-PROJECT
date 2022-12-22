@@ -1,4 +1,4 @@
-package cz.fraloily.implementationpartsin.incomings;
+package cz.fraloily.implementationpartsin.DTO;
 
 import cz.fraloily.implementationpartsin.entity.Author;
 import cz.fraloily.implementationpartsin.entity.Book;
@@ -8,8 +8,9 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class AuthorDTO implements DTO<Author> {
+public class AuthorDTO {
 
     private String email;
 
@@ -19,7 +20,7 @@ public class AuthorDTO implements DTO<Author> {
 
     private List<Book> books;
 
-    private Set<Publisher> publishers;
+    private Set<Long> publishers;
 
     public AuthorDTO() {}
 
@@ -55,40 +56,12 @@ public class AuthorDTO implements DTO<Author> {
         this.books = books;
     }
 
-    public Set<Publisher> getPublishers() {
+    public Set<Long> getPublishers() {
         return publishers;
     }
 
     public void setPublishers(Set<Publisher> publishers) {
-        this.publishers = publishers;
+        this.publishers = publishers.stream().map(Publisher::getId).collect(Collectors.toSet());
     }
 
-    @Override
-    public Author updateEntity(Author entity) {
-        //TODO: Add validations
-        if(email == null || firstname == null || surname == null ) {
-            throw new FailedResponse(HttpStatus.BAD_REQUEST, "Some required properties are null.");
-        }
-        entity.setEmail(email);
-        entity.setFirstName(firstname);
-        entity.setSurname(surname);
-        if(books != null) {
-           entity.setBooks(books);
-        }
-        if(publishers != null) {
-           entity.setPublishers(publishers);
-        }
-        return entity;
-    }
-
-    @Override
-    public String toString() {
-        return "AuthorIn{" +
-                "email='" + email + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", surname='" + surname + '\'' +
-                ", books=" + books +
-                ", publishers=" + publishers +
-                '}';
-    }
 }

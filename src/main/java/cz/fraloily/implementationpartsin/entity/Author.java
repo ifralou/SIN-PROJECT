@@ -4,7 +4,6 @@ package cz.fraloily.implementationpartsin.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -24,7 +23,7 @@ public class Author {
     @NotNull
     @NotBlank
     @Column(name = "firstname")
-    private String firstName;
+    private String firstname;
 
     @NotNull
     @NotBlank
@@ -38,15 +37,15 @@ public class Author {
     private Set<Publisher> publishers = new HashSet<>();
 
     public Author() {}
-    public Author(String email, String firstName, String surname) {
+    public Author(String email, String firstname, String surname) {
         this.email = email;
-        this.firstName = firstName;
+        this.firstname = firstname;
         this.surname = surname;
     }
 
-    public Author(String email, String firstName, String surname, Long id) {
+    public Author(String email, String firstname, String surname, Long id) {
         this.email = email;
-        this.firstName = firstName;
+        this.firstname = firstname;
         this.surname = surname;
         this.id = id;
     }
@@ -67,12 +66,12 @@ public class Author {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstName) {
+        this.firstname = firstName;
     }
 
     public String getSurname() {
@@ -104,12 +103,12 @@ public class Author {
         if (this == o) return true;
         if (!(o instanceof Author)) return false;
         Author author = (Author) o;
-        return Objects.equals(getId(), author.getId()) && Objects.equals(getEmail(), author.getEmail()) && Objects.equals(getFirstName(), author.getFirstName()) && Objects.equals(getSurname(), author.getSurname()) && Objects.equals(getBooks(), author.getBooks()) && Objects.equals(getPublishers(), author.getPublishers());
+        return Objects.equals(getId(), author.getId()) && Objects.equals(getEmail(), author.getEmail()) && Objects.equals(getFirstname(), author.getFirstname()) && Objects.equals(getSurname(), author.getSurname()) && Objects.equals(getBooks(), author.getBooks()) && Objects.equals(getPublishers(), author.getPublishers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getFirstName(), getSurname(), getBooks(), getPublishers());
+        return Objects.hash(getId(), getEmail(), getFirstname(), getSurname(), getBooks(), getPublishers());
     }
 
     @Override
@@ -117,10 +116,10 @@ public class Author {
         return "Author{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
+                ", firstName='" + firstname + '\'' +
                 ", surname='" + surname + '\'' +
                 ", books=" + books +
-                ", publishers=" + publishers +
+                ", publishers=" + publishers.stream().map(Publisher::getId)+
                 '}';
     }
 }
