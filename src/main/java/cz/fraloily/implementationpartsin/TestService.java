@@ -40,12 +40,7 @@ public class TestService {
                )
        );
 
-        System.out.println(
-                bookRep.findByIsbn("asdfasdfasdf").orElseThrow(
-                        () -> new RuntimeException("No book found")
-                )
-        );
-
+        System.out.println(bookRep.findAll());
         return this;
     }
 

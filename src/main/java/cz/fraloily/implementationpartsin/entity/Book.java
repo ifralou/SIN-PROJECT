@@ -72,12 +72,23 @@ public class Book {
         this.publishingDate = publishingDate;
     }
 
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
-                "isbn='" + isbn + '\'' +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
                 ", name='" + name + '\'' +
                 ", publishingDate=" + publishingDate +
+                ", authors=" + authors +
+                ", publisher=" + publisher +
                 '}';
     }
 

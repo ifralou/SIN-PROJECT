@@ -1,52 +1,86 @@
 package cz.fraloily.implementationpartsin.service;
 
+import cz.fraloily.implementationpartsin.DTO.AuthorDTO;
+import cz.fraloily.implementationpartsin.DTO.mappers.AuthorMapper;
 import cz.fraloily.implementationpartsin.entity.Author;
+import cz.fraloily.implementationpartsin.entity.Publisher;
 import cz.fraloily.implementationpartsin.exceptions.FailedResponse;
-import cz.fraloily.implementationpartsin.incomings.AuthorDTO;
 import cz.fraloily.implementationpartsin.repository.AuthorRepository;
+import cz.fraloily.implementationpartsin.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
-@RestController
-@RequestMapping("/author")
+@Service
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final PublisherRepository publisherRepository;
 
     public AuthorService(
-            @Autowired AuthorRepository authorRepository
+            @Autowired AuthorRepository repository,
+            @Autowired PublisherRepository publisherRepository
     ) {
-        this.authorRepository = authorRepository;
+        this.authorRepository = repository;
+        this.publisherRepository = publisherRepository;
     }
 
-    @GetMapping(value = "/{id}")
-    Author getOne(@PathVariable Long id) {
-        return authorRepository
-                .getAuthorById(id)
-                .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "No author with id " + id));
+    public AuthorDTO getAuthorById(Long id) {
+        return toDTO(
+                authorRepository
+                    .getAuthorById(id)
+                    .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "No author with id " + id))
+        );
     }
 
-    @PostMapping
-    @Transactional
-    public Author postOne(@RequestBody Author author) {
-        return authorRepository.save(author);
+    public AuthorDTO createAuthorIfNotExists(AuthorDTO author) {
+        return toDTO(
+            authorRepository
+                .getAuthorByEmailAndFirstnameAndSurname(
+                        author.getEmail(), author.getFirstname(), author.getSurname()
+                ).orElseGet(() -> new Author(
+                        author.getEmail(),
+                        author.getFirstname(),
+                        author.getSurname()
+                ))
+        );
     }
 
-    @PutMapping("/{id}")
-    @Transactional
-    public Author putOne(@PathVariable Long id, @RequestBody AuthorDTO incoming) {
+    public AuthorDTO updateAuthorCredentials(Long id, AuthorDTO incoming) {
         var current = authorRepository
                 .getAuthorById(id)
-                .orElseThrow(() -> new FailedResponse( HttpStatus.NOT_FOUND, "No author with id " + id));
-        return authorRepository.save(incoming.updateEntity(current));
+                .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "No author exists."));
+
+        current.setEmail(incoming.getEmail());
+        current.setFirstname(incoming.getFirstname());
+        current.setSurname(incoming.getSurname());
+
+        return toDTO(authorRepository.save(current));
     }
 
-    @DeleteMapping("/{id}")
-    @Transactional
-    public void deleteOne(@PathVariable Long id) {
+    public AuthorDTO toDTO(Author author) {
+        return AuthorMapper.INSTANCE.authorToAuthorDTO(author);
+    }
+
+    public void deleteAuthorById(Long id) {
         authorRepository.deleteAuthorById(id);
     }
+
+    public AuthorDTO addPublisher(Long authorId, Long publisherId) {
+        var publisher = publisherRepository.findById(publisherId)
+                .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "No publisher exists."));
+        var author = authorRepository.getAuthorById(authorId)
+                .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "No author with such id: " + authorId));
+
+        publisher.getAuthors().add(author);
+        publisherRepository.save(publisher);
+
+        author.getPublishers().add(publisher);
+
+        return toDTO(
+                authorRepository.save(author)
+        );
+    }
+
+
 }

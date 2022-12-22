@@ -1,26 +1,29 @@
 package cz.fraloily.implementationpartsin.controller;
 
+import cz.fraloily.implementationpartsin.DTO.PublisherDTO;
 import cz.fraloily.implementationpartsin.entity.Author;
 import cz.fraloily.implementationpartsin.repository.PublisherRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cz.fraloily.implementationpartsin.service.PublisherService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 
 @RequestMapping("/publisher")
 public class PublisherController {
 
-    private final PublisherRepository publisherRepository;
+    private final PublisherService publisherService;
 
-    public PublisherController(PublisherRepository publisherRepository) {
-        this.publisherRepository = publisherRepository;
+    public PublisherController(PublisherService publisherService) {
+        this.publisherService = publisherService;
     }
 
-    @GetMapping("/{id}")
-    public Author getOne(@PathVariable Long id){
-        return null;
+    @PutMapping("/{id}/newbook")
+    public PublisherDTO releaseBook(
+            @PathVariable Long id,
+            @RequestParam Long bookId
+    ) {
+        return publisherService.addBookToPublisher(id, bookId);
     }
+
 
 }
