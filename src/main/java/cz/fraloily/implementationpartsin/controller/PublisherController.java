@@ -2,7 +2,6 @@ package cz.fraloily.implementationpartsin.controller;
 
 import cz.fraloily.implementationpartsin.DTO.PublisherDTO;
 import cz.fraloily.implementationpartsin.service.PublisherService;
-import cz.fraloily.implementationpartsin.service.impl.PublisherServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
