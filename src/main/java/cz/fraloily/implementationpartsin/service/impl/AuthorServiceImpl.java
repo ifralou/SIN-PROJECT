@@ -62,6 +62,7 @@ public class AuthorServiceImpl implements AuthorService {
         return AuthorMapper.INSTANCE.authorToAuthorDTO(author);
     }
 
+
     public void deleteAuthorById(Long id) {
         authorRepository.deleteAuthorById(id);
     }
