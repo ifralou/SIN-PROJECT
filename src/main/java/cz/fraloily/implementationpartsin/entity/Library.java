@@ -3,11 +3,11 @@ package cz.fraloily.implementationpartsin.entity;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "library")
 public class Library {
-    //TODO: Add book relation.
 
     @Id
     @GeneratedValue
@@ -18,6 +18,9 @@ public class Library {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+
+    @ManyToMany
+    private Set<Book> books;
 
     public Library() {}
 
@@ -48,6 +51,18 @@ public class Library {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
     }
 
     @Override

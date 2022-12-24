@@ -1,9 +1,8 @@
 package cz.fraloily.implementationpartsin.controller;
 
 import cz.fraloily.implementationpartsin.DTO.PublisherDTO;
-import cz.fraloily.implementationpartsin.entity.Author;
-import cz.fraloily.implementationpartsin.repository.PublisherRepository;
 import cz.fraloily.implementationpartsin.service.PublisherService;
+import cz.fraloily.implementationpartsin.service.impl.PublisherServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/publisher")
 public class PublisherController {
 
-    private final PublisherService publisherService;
+    private final PublisherService publisherServiceImpl;
 
-    public PublisherController(PublisherService publisherService) {
-        this.publisherService = publisherService;
+    public PublisherController(PublisherService publisherServiceImpl) {
+        this.publisherServiceImpl = publisherServiceImpl;
     }
 
     @PutMapping("/{id}/newbook")
@@ -22,7 +21,7 @@ public class PublisherController {
             @PathVariable Long id,
             @RequestParam Long bookId
     ) {
-        return publisherService.addBookToPublisher(id, bookId);
+        return publisherServiceImpl.addBookToPublisher(id, bookId);
     }
 
 

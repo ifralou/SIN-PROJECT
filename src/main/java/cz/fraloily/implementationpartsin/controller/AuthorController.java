@@ -1,11 +1,9 @@
 package cz.fraloily.implementationpartsin.controller;
 
-import cz.fraloily.implementationpartsin.DTO.mappers.AuthorMapper;
-import cz.fraloily.implementationpartsin.exceptions.FailedResponse;
 import cz.fraloily.implementationpartsin.DTO.AuthorDTO;
 import cz.fraloily.implementationpartsin.service.AuthorService;
+import cz.fraloily.implementationpartsin.service.impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
