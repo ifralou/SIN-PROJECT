@@ -7,6 +7,8 @@ import cz.fraloily.implementationpartsin.exceptions.FailedResponse;
 import cz.fraloily.implementationpartsin.repository.AuthorRepository;
 import cz.fraloily.implementationpartsin.repository.PublisherRepository;
 import cz.fraloily.implementationpartsin.service.AuthorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final PublisherRepository publisherRepository;
 
+    private final Logger log = LoggerFactory.getLogger(AuthorService.class);
+
     public AuthorServiceImpl(
             @Autowired AuthorRepository repository,
             @Autowired PublisherRepository publisherRepository
@@ -26,6 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     public AuthorDTO getAuthorById(Long id) {
+        log.debug("Trying to find author with an id: " + id);
         return toDTO(
                 authorRepository
                     .getAuthorById(id)

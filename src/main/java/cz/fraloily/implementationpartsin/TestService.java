@@ -6,6 +6,8 @@ import cz.fraloily.implementationpartsin.entity.Publisher;
 import cz.fraloily.implementationpartsin.repository.AuthorRepository;
 import cz.fraloily.implementationpartsin.repository.BookRepository;
 import cz.fraloily.implementationpartsin.repository.PublisherRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class TestService {
     private AuthorRepository authorRep;
     private PublisherRepository publisherRepository;
 
+    private final Logger log = LoggerFactory.getLogger(TestService.class);
+
 
     public TestService(
             @Autowired BookRepository bookRa,
@@ -32,6 +36,7 @@ public class TestService {
     }
 
     public TestService testBook() {
+        log.info("Loading books for test purposes...");
        bookRep.save(
                new Book(
                        "asdfasdfasdf",
@@ -40,11 +45,12 @@ public class TestService {
                )
        );
 
-        System.out.println(bookRep.findAll());
+        log.info(bookRep.findAll().toString());
         return this;
     }
 
     public TestService testPublisher() {
+        log.info("Loading publishers for test purposes...");
         var publisher1 = new Publisher("Publisehr1");
         publisherRepository.save(publisher1);
 
@@ -54,11 +60,12 @@ public class TestService {
         var publisher3 = new Publisher("Publisehr3");
         publisherRepository.save(publisher3);
 
-        System.out.println(publisherRepository.findAll());
+        log.info(publisherRepository.findAll().toString());
         return this;
     }
 
     public TestService testAuthor() {
+        log.info("Loading authors for test purposes...");
         var author1 = new Author(
                 "email@email.com",
                 "John",
@@ -70,14 +77,14 @@ public class TestService {
                 "Doe"
         );
 
-        System.out.println(
+        log.info(
                 "Authors are the same: " + author1.equals(author2)
         );
 
         authorRep.save(author1);
 
-        System.out.println(
-                authorRep.getAuthorByEmail("email@email.com")
+        log.info(
+                authorRep.getAuthorByEmail("email@email.com").toString()
         );
 
         return this;
@@ -102,14 +109,14 @@ public class TestService {
                 "Doe"
         );
         persistBooks(author, List.of(book));
-        System.out.println(author.getBooks());
+        log.info(author.getBooks().toString());
         authorRep.save(author);
 
-        System.out.println(
-                authorRep.getAuthorByEmail("email@email.com")
+        log.debug(
+                authorRep.getAuthorByEmail("email@email.com").toString()
         );
         authorRep.getAuthorByEmail("email@email.com").forEach(
-                a -> System.out.println(a.getBooks())
+                a -> log.debug(a.getBooks().toString())
         );
 
         return this;
