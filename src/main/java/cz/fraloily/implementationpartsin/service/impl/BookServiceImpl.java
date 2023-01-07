@@ -1,5 +1,6 @@
 package cz.fraloily.implementationpartsin.service.impl;
 
+import cz.fraloily.implementationpartsin.entity.Library;
 import cz.fraloily.implementationpartsin.exceptions.FailedResponse;
 import cz.fraloily.implementationpartsin.repository.BookRepository;
 import cz.fraloily.implementationpartsin.repository.LibraryRepository;
@@ -22,13 +23,13 @@ public class BookServiceImpl implements BookService {
         this.libraryRepository = libraryRepository;
     }
 
-    public void addBookToLibrary(Long bookId, Long libraryId) {
+    public Library addBookToLibrary(Long bookId, Long libraryId) {
         var book = bookRepository.findBookById(bookId)
                 .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "Book not found"));
         var library =  libraryRepository.findById(libraryId)
                 .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "Library not found"));
         library.addBook(book);
-        libraryRepository.save(library);
+        return libraryRepository.save(library);
     }
 
 

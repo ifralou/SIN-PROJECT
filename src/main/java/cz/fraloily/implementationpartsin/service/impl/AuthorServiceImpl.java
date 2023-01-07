@@ -10,6 +10,7 @@ import cz.fraloily.implementationpartsin.service.AuthorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
         this.publisherRepository = publisherRepository;
     }
 
+    @Cacheable("authors")
     public AuthorDTO getAuthorById(Long id) {
         log.debug("Trying to find author with an id: " + id);
         return toDTO(
@@ -38,6 +40,8 @@ public class AuthorServiceImpl implements AuthorService {
         );
     }
 
+
+    @Cacheable("authors")
     public AuthorDTO createAuthorIfNotExists(AuthorDTO author) {
         return toDTO(
             authorRepository

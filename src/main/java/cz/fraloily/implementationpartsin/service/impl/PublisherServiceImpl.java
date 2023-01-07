@@ -8,6 +8,7 @@ import cz.fraloily.implementationpartsin.repository.BookRepository;
 import cz.fraloily.implementationpartsin.repository.PublisherRepository;
 import cz.fraloily.implementationpartsin.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class PublisherServiceImpl implements PublisherService {
         this.bookRepository = bookRepository;
     }
 
+    @Cacheable("bookToPublisher")
     public PublisherDTO addBookToPublisher(long publisherId, Long bookId) {
         var book = bookRepository.findBookById(bookId)
                 .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "NO BOOK FIND."));

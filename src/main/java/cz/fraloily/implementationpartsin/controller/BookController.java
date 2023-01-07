@@ -1,5 +1,6 @@
 package cz.fraloily.implementationpartsin.controller;
 
+import cz.fraloily.implementationpartsin.entity.Library;
 import cz.fraloily.implementationpartsin.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +15,11 @@ public class BookController {
     }
 
     @PutMapping("/{bookId}/publisher")
-    void addBookToPublisher(
+    Library addBookToPublisher(
             @PathVariable Long bookId,
             @RequestParam Long publisherId
     ) {
-        bookServiceImpl.addBookToLibrary(bookId, publisherId);
+        return bookServiceImpl.addBookToLibrary(bookId, publisherId);
     }
 
 }
