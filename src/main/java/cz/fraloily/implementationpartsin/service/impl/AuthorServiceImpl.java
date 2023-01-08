@@ -77,10 +77,17 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     public AuthorDTO addPublisher(Long authorId, Long publisherId) {
-        var publisher = publisherRepository.findById(publisherId)
-                .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "No publisher exists."));
-        var author = authorRepository.getAuthorById(authorId)
-                .orElseThrow(() -> new FailedResponse(HttpStatus.NOT_FOUND, "No author with such id: " + authorId));
+        var publisherOption = publisherRepository.findById(publisherId);
+        if(publisherOption.isEmpty())  {
+            throw new FailedResponse(HttpStatus.NOT_FOUND, "No publisher exists.");
+        }
+        var publisher = publisherOption.get();
+
+        var authorOption = authorRepository.getAuthorById(authorId);
+        if(authorOption.isEmpty()) {
+            throw new FailedResponse(HttpStatus.NOT_FOUND, "No author with such id: " + authorId);
+        }
+        var author = authorOption.get();
 
         publisher.getAuthors().add(author);
         publisherRepository.save(publisher);

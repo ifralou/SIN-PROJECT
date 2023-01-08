@@ -1,6 +1,6 @@
 package cz.fraloily.implementationpartsin;
 
-import cz.fraloily.implementationpartsin.interceptors.requestLength.RequestLengthInterceptor;
+import cz.fraloily.implementationpartsin.interceptor.RequestLengthInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

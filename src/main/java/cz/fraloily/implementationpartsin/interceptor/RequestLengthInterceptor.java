@@ -1,4 +1,4 @@
-package cz.fraloily.implementationpartsin.interceptors.requestLength;
+package cz.fraloily.implementationpartsin.interceptor;
 
 import cz.fraloily.implementationpartsin.utils.Timer;
 import org.slf4j.Logger;
